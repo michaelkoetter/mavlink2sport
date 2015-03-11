@@ -7,23 +7,19 @@
 #ifndef _mavlink2sport_H_
 #define _mavlink2sport_H_
 #include "Arduino.h"
-//add your includes for the project mavlink2sport here
 
+#include "mavlink/common/mavlink.h"
 
-//end of add your includes here
 #ifdef __cplusplus
 extern "C" {
 #endif
 void loop();
 void setup();
+
+void handle_mavlink_msg(mavlink_message_t *msg);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-//add your function definitions for the project mavlink2sport here
-
-
-
-
-//Do not add code below this line
 #endif /* _mavlink2sport_H_ */

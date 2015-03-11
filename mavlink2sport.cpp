@@ -2,14 +2,26 @@
 #include "mavlink2sport.h"
 
 
-//The setup function is called once at startup of the sketch
+#define MAVLinkSerial Serial2
+
+mavlink_message_t msg;
+mavlink_status_t status;
+
 void setup()
 {
-// Add your initialization code here
+	MAVLinkSerial.begin(57600);
 }
 
-// The loop function is called in an endless loop
 void loop()
 {
-//Add your repeated code here
+	while (MAVLinkSerial.available()) {
+		uint8_t c = MAVLinkSerial.read();
+		if (mavlink_parse_char(MAVLINK_COMM_0, c, &msg, &status)) {
+			handle_mavlink_msg(&msg);
+		}
+	}
+}
+
+void handle_mavlink_msg(mavlink_message_t *msg) {
+
 }
