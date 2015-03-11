@@ -3,6 +3,11 @@
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="it.baeyens.arduino.core.toolChain.release.1587910142">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="it.baeyens.arduino.core.toolChain.release.1587910142" moduleId="org.eclipse.cdt.core.settings" name="Release">
+				<macros>
+					<stringMacro name="A.EXTRA.TIME.LOCAL" type="VALUE_TEXT" value="0"/>
+					<stringMacro name="A.BUILD.CORE.PATH" type="VALUE_TEXT" value="${A.BUILD.ARDUINO.PATH}/hardware/teensy/avr/cores/teensy3"/>
+					<stringMacro name="A.BUILD.ARDUINO.PATH" type="VALUE_TEXT" value="/home/mk/Develop/arduino-1.6.1"/>
+				</macros>
 				<externalSettings/>
 				<extensions>
 					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
@@ -51,4 +56,5 @@
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+	<storageModule moduleId="refreshScope"/>
 </cproject>
