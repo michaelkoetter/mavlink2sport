@@ -1,4 +1,3 @@
-// Do not remove the include below
 #include "mavlink2sport.h"
 
 
