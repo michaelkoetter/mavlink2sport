@@ -81,10 +81,6 @@ void SPortBus::flush() {
 }
 
 size_t SPortBus::write(uint8_t b) {
-#ifdef SPORT_DEBUG
-	Serial.printf("SPort | >>> write: %#04x\n", b);
-#endif
-
 	// we need to escape 0x7E so it doesn't appear on the bus
 	size_t s = 0;
 	if (b == 0x7E) {
