@@ -10,7 +10,9 @@
  *   https://www.ordinoscope.net/static/frsky-arduino/FrskySP/doc/html/index.html
  */
 
-// FrSky PRIM IDs (1 byte)
+#define SPORT_DEBUG 1
+
+#define POLL_FRAME				0x7E
 #define DATA_FRAME              0x10
 #define EMPTY_FRAME				0x00
 #define EMPTY_FRAME_CHECKSUM	0xFF
