@@ -6,29 +6,20 @@
 #include "Stream.h"
 #include "SPortSensor.h"
 
-class SPortBus : public Stream {
+class SPortBus {
 public:
-	SPortBus(Stream &uart);
+	SPortBus();
 	virtual ~SPortBus();
 
-	virtual int available();
-	virtual int read();
-	virtual int peek();
-	virtual void flush();
-	virtual size_t write(uint8_t b);
-	virtual size_t write(const uint8_t *buffer, size_t size);
-
 	void Process();
-
-	void ResetChecksum(uint8_t header = 0);
-	uint8_t GetChecksum();
+	void Send(SPortData_t &data);
 
 private:
-	int UpdateChecksum(int byte);
+	size_t Write(uint8_t byte);
+	size_t Write(uint8_t *buffer, size_t len);
 
-	Stream	&uart;
-	short	checksum;
-
+	Stream		&uart;
+	short		checksum;
 };
 
 #endif /* SPORTBUS_H_ */

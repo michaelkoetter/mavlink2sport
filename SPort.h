@@ -1,6 +1,8 @@
 #ifndef SPORT_H_
 #define SPORT_H_
 
+#include "inttypes.h"
+
 /*
  * FrSky S.Port protocol
  *
@@ -12,12 +14,19 @@
 
 #define SPORT_DEBUG 1
 
+// indicates receiver polling a frame
 #define POLL_FRAME				0x7E
-#define DATA_FRAME              0x10
-#define EMPTY_FRAME				0x00
-#define EMPTY_FRAME_CHECKSUM	0xFF
 
-// FrSky new DATA IDs (2 bytes)
+// byte-stuffing "escapes" 0x7E so it doesn't appear on the bus unless the receiver is polling
+#define BYTESTUFF				0x7D
+#define STUFF_MASK				0x20
+
+// start of a data frame
+#define DATA_FRAME              0x10
+
+
+
+// data type IDs
 #define ALT_FIRST_ID            0x0100
 #define ALT_LAST_ID             0x010f
 #define VARIO_FIRST_ID          0x0110
@@ -66,11 +75,21 @@
 #define XJT_VERSION_ID          0xf106
 #define NO_DATA_ID				0x0000
 
+// sensor "physical id" + checksum
 enum SPortPhyID {
 	ID0 = 0x00,  ID1 = 0xA1,  ID2 = 0x22,  ID3 = 0x83,  ID4 = 0xE4,  ID5 = 0x45,  ID6 = 0xC6,
 	ID7 = 0x67,  ID8 = 0x48,  ID9 = 0xE9, ID10 = 0x6A, ID11 = 0xCB, ID12 = 0xAC, ID13 = 0x0D,
 	ID14 = 0x8E, ID15 = 0x2F, ID16 = 0xD0, ID17 = 0x71, ID18 = 0xF2, ID19 = 0x53, ID20 = 0x34,
 	ID21 = 0x95, ID22 = 0x16, ID23 = 0xB7, ID24 = 0x98, ID25 = 0x39, ID26 = 0xBA, ID27 = 0x1B
+};
+
+#define DATA_FRAME_LEN			8
+
+struct SPortData_t {
+	uint8_t		header;
+	uint16_t 	dataTypeId;
+	uint32_t 	data;
+	uint8_t		checksum;
 };
 
 #endif /* SPORT_H_ */
