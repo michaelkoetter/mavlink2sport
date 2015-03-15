@@ -9,19 +9,18 @@ class VFASSensor : public SPortSensor {
 public:
 	VFASSensor();
 	virtual ~VFASSensor();
-	unsigned int getCurrent() const;
-	void setCurrent(unsigned int current);
+	float getCurrent() const;
+	void setCurrent(float current);
 	float getVoltage() const;
 	void setVoltage(float voltage);
 
-protected:
-	virtual bool DoPoll(SPortData_t *data);
+	virtual bool Poll(SPortData_t *data);
 
 private:
 	uint32_t		pollSeq;
 
 	float			voltage;
-	unsigned int	current;
+	float			current;
 };
 
 #endif /* VFASSENSOR_H_ */

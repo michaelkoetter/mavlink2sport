@@ -5,16 +5,10 @@
 
 class SPortSensor {
 public:
-	SPortSensor(SPortPhyID phyId);
+	SPortSensor();
 	virtual ~SPortSensor();
 
-	virtual bool Poll(SPortPhyID phyId, SPortData_t *data);
-
-protected:
-	virtual bool DoPoll(SPortData_t *data) = 0;
-
-private:
-	SPortPhyID		phyId;
+	virtual bool Poll(SPortData_t *data) = 0;
 };
 
 #endif /* SPORTSENSOR_H_ */

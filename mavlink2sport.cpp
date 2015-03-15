@@ -15,7 +15,7 @@ void setup()
 	Serial.println("MAVLink2SPort | setup() ...");
 #endif
 
-
+	bus.AttachSensor(VFAS_DEFAULT_ID, vfas);
 
 #ifdef MAVLINK2SPORT_DEBUG
 	Serial.println("MAVLink2SPort | setup() done");
@@ -24,5 +24,8 @@ void setup()
 
 void loop()
 {
+	vfas.setVoltage(1.2);
+	vfas.setCurrent(3.4);
+
 	bus.Process();
 }

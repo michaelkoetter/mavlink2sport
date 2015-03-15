@@ -27,6 +27,7 @@ void SPortBus::Process() {
 #ifdef SPORT_DEBUG
 			Serial.printf("SPort | poll PhyID: %#04x\n", data);
 #endif
+			PollSensor(data);
 		} else {
 			data = uart.read(); // swallow everything else...
 		}
@@ -36,11 +37,10 @@ void SPortBus::Process() {
 void SPortBus::Send(SPortData_t& data) {
 	UART0_C3 |= 32;	// UART transmit
 
-
 	Write(data.header);
 	Write((uint8_t*) &data.dataTypeId, 2);
 	Write((uint8_t*) &data.data, 4);
-	data.checksum = checksum & 0x00FF;
+	data.checksum = 0xFF - checksum;
 	Write(data.checksum);
 
 	checksum = 0;
@@ -67,7 +67,18 @@ size_t SPortBus::Write(uint8_t byte) {
 	checksum += checksum >> 8;
 	checksum &= 0x00FF;
 
+#ifdef SPORT_DEBUG_VERBOSE
+	Serial.printf("SPort | >>> sent %#04x\n", byte);
+#endif
+
 	return s;
+}
+
+void SPortBus::AttachSensor(SPortPhyID phyId, SPortSensor& sensor) {
+	int index = SPORT_SENSOR_INDEX(phyId);
+	if (index < SPORT_SENSORS) {
+		sensors[index] = &sensor;
+	}
 }
 
 size_t SPortBus::Write(uint8_t* buffer, size_t len) {
@@ -76,4 +87,17 @@ size_t SPortBus::Write(uint8_t* buffer, size_t len) {
 		written += Write(buffer[i]);
 	}
 	return written;
+}
+
+void SPortBus::PollSensor(uint8_t phyId) {
+	int index = SPORT_SENSOR_INDEX(phyId);
+	if (index < SPORT_SENSORS) {
+		SPortSensor *sensor = sensors[index];
+		if (sensor != NULL) {
+			SPortData_t dataFrame = { DATA_FRAME, 0 };
+			if (sensor->Poll(&dataFrame)) {
+				Send(dataFrame);
+			}
+		}
+	}
 }

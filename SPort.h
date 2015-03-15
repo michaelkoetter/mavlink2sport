@@ -12,7 +12,8 @@
  *   https://www.ordinoscope.net/static/frsky-arduino/FrskySP/doc/html/index.html
  */
 
-#define SPORT_DEBUG 1
+#define SPORT_DEBUG 			1
+#define SPORT_DEBUG_VERBOSE		0
 
 // indicates receiver polling a frame
 #define POLL_FRAME				0x7E
@@ -82,8 +83,6 @@ enum SPortPhyID {
 	ID14 = 0x8E, ID15 = 0x2F, ID16 = 0xD0, ID17 = 0x71, ID18 = 0xF2, ID19 = 0x53, ID20 = 0x34,
 	ID21 = 0x95, ID22 = 0x16, ID23 = 0xB7, ID24 = 0x98, ID25 = 0x39, ID26 = 0xBA, ID27 = 0x1B
 };
-
-#define DATA_FRAME_LEN			8
 
 struct SPortData_t {
 	uint8_t		header;
