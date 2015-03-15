@@ -4,13 +4,10 @@
 #include "Arduino.h"
 
 SPortBus::SPortBus()
-	: uart(Serial1), checksum(0) {
+	: uart(SPORT_SERIAL), checksum(0) {
 
-	Serial1.begin(SPORT_BAUD);
-
-	UART0_C1 = 0xA0; // Single wire mode
-	UART0_C3 = 0x10; // Tx invert
-	UART0_S2 = 0x10; // Rx invert
+	SPORT_SERIAL.begin(SPORT_BAUD);
+	SPORT_SERIAL_INIT()
 }
 
 SPortBus::~SPortBus() {
@@ -35,7 +32,7 @@ void SPortBus::Process() {
 }
 
 void SPortBus::Send(SPortData_t& data) {
-	UART0_C3 |= 32;	// UART transmit
+	SPORT_SERIAL_BEGIN_TX()
 
 	Write(data.header);
 	Write((uint8_t*) &data.dataTypeId, 2);
@@ -45,7 +42,8 @@ void SPortBus::Send(SPortData_t& data) {
 
 	checksum = 0;
 	uart.flush();
-	UART0_C3 ^= 32;	// UART receive
+
+	SPORT_SERIAL_END_TX()
 
 #ifdef SPORT_DEBUG
 	Serial.printf("SPort | >>> sent data id: %#06x data: %#010x (%d) checksum: %#04x\n",

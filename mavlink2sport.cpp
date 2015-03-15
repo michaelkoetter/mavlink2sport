@@ -2,11 +2,14 @@
 
 #include "SPortBus.h"
 #include "VFASSensor.h"
+#include "MAVLink.h"
 
 #define MAVLINK2SPORT_DEBUG 1
 
 VFASSensor vfas;
 SPortBus bus;
+
+MAVLink mavlink;
 
 void setup()
 {
@@ -27,5 +30,6 @@ void loop()
 	vfas.setVoltage(1.2);
 	vfas.setCurrent(3.4);
 
+	mavlink.Process();
 	bus.Process();
 }

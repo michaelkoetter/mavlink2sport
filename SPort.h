@@ -13,7 +13,7 @@
  */
 
 #define SPORT_DEBUG 			1
-#define SPORT_DEBUG_VERBOSE		0
+//#define SPORT_DEBUG_VERBOSE		1
 
 // indicates receiver polling a frame
 #define POLL_FRAME				0x7E
