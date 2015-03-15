@@ -3,6 +3,7 @@
 #include "SPortBus.h"
 #include "VFASSensor.h"
 #include "MAVLink.h"
+#include "SystemStatusProcessor.h"
 
 #define MAVLINK2SPORT_DEBUG 1
 
@@ -10,6 +11,7 @@ VFASSensor vfas;
 SPortBus bus;
 
 MAVLink mavlink;
+SystemStatusProcessor sys_status(vfas);
 
 void setup()
 {
@@ -19,6 +21,7 @@ void setup()
 #endif
 
 	bus.AttachSensor(VFAS_DEFAULT_ID, vfas);
+	mavlink.AddMessageProcessor(&sys_status);
 
 #ifdef MAVLINK2SPORT_DEBUG
 	Serial.println("MAVLink2SPort | setup() done");
@@ -27,9 +30,6 @@ void setup()
 
 void loop()
 {
-	vfas.setVoltage(1.2);
-	vfas.setCurrent(3.4);
-
 	mavlink.Process();
 	bus.Process();
 }

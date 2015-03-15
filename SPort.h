@@ -12,7 +12,7 @@
  *   https://www.ordinoscope.net/static/frsky-arduino/FrskySP/doc/html/index.html
  */
 
-#define SPORT_DEBUG 			1
+//#define SPORT_DEBUG 			1
 //#define SPORT_DEBUG_VERBOSE		1
 
 // indicates receiver polling a frame

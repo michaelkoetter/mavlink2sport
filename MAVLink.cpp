@@ -22,6 +22,21 @@ void MAVLink::Process() {
 #ifdef MAVLINK_DEBUG
 			Serial.printf("MAVLink | msg id: %#04x\n", message.msgid);
 #endif
+
+			for (int i = 0; i < MAVLINK_MAX_MSGPROCESSORS; i++) {
+				if (processors[i] != NULL) {
+					processors[i]->ProcessMessage(&message);
+				}
+			}
+		}
+	}
+}
+
+void MAVLink::AddMessageProcessor(MAVLinkMessageProcessor* processor) {
+	for (int i = 0; i < MAVLINK_MAX_MSGPROCESSORS; i++) {
+		if (processors[i] == NULL) {
+			processors[i] = processor;
+			break;
 		}
 	}
 }
